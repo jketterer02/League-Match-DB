@@ -202,6 +202,7 @@ while(1==1):
     print("3: Show every Objective taken from Games 1 and 2, along with the player that took them")
     print("4: Display each player's calculated KDA stat and the game they were in, ordered by game")
     print("5: Display the winning team of each game")
+
     # Gets user input for which query to display
     choice = input("Enter Q1-Q10, or Q to quit: ")
     if choice == ('Q') or choice == ('q'): 
@@ -219,9 +220,21 @@ while(1==1):
         print(df.to_string(index=False))
         print("\n")
     elif choice == "2" or choice == "Q2": 
-        print("2 chosen")
+        print("\n")
+        cursor.execute("SELECT PLAYER.P_team_name AS Team, MAX(KDA.Kills) AS Maximum_Kills, MAX(KDA.Deaths) AS Maximum_Deaths, MAX(KDA.Assists) AS Maximum_Assists,ROUND(AVG(KDA.Kills),1) AS Average_Kills, ROUND(AVG(KDA.Deaths),1) AS Average_Deaths, ROUND(AVG(KDA.Assists),1) AS Average_Assists FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name GROUP BY PLAYER.P_team_name HAVING AVG(KDA.Kills) > 3.7 ORDER BY Maximum_Kills ASC")
+        rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        df = pandas.DataFrame(rows, columns=columns)
+        print(df.to_string(index=False))
+        print("\n")
     elif choice == "3" or choice == "Q3": 
-        print("3 chosen")
+        print("\n")
+        cursor.execute("SELECT O_game_number AS Game, Objective_Type as Objective, O_player_name AS Player_Name FROM OBJECTIVE WHERE O_game_number = 1 ||O_game_number = 2")
+        rows = cursor.fetchall()
+        columns = [desc[0] for desc in cursor.description]
+        df = pandas.DataFrame(rows, columns=columns)
+        print(df.to_string(index=False))
+        print("\n")
     elif choice == "4" or choice == "Q4": 
         print("4 chosen")
     elif choice == "5" or choice == "Q5": 
