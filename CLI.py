@@ -6,6 +6,7 @@ conn = mysql.connector.connect(host="localhost", user="root", password="password
 
 # Check if connection is established to the database
 if conn.is_connected(): print("Connection to MySQL established...")
+
 # Create a cursor object to execute SQL queries
 cursor = conn.cursor()
 
@@ -191,6 +192,38 @@ for line in populate_statements: cursor.execute(line)
 
 # Commit the transaction
 conn.commit()
+
+while(1==1):
+    print("Please select an SQL Query:")
+    print("1: Display every player and coach, ordered by team")
+    print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
+    print("3: Show every Objective taken from Games 1 and 2, along with the player that took them")
+    print("4: Display each player's calculated KDA stat and the game they were in, ordered by game")
+    print("5: Display the winners of each game")
+    choice = input("Enter Q1-Q10, or Q to quit: ")
+    if choice == ('Q') or choice == ('q'): 
+        quit("Exiting Program")
+    elif choice == "1" or choice == "Q1": 
+        print("1 chosen")
+    elif choice == "2" or choice == "Q2": 
+        print("2 chosen")
+    elif choice == "3" or choice == "Q3": 
+        print("3 chosen")
+    elif choice == "4" or choice == "Q4": 
+        print("4 chosen")
+    elif choice == "5" or choice == "Q5": 
+        print("5 chosen")
+    elif choice == "6" or choice == "Q6": 
+        print("6 chosen")
+    elif choice == "7" or choice == "Q7": 
+        print("7 chosen")
+    elif choice == "8" or choice == "Q8": 
+        print("8 chosen")
+    elif choice == "9" or choice == "Q9": 
+        print("9 chosen")
+    elif choice == "10" or choice == "Q10": 
+        print("10 chosen")
+
 
 # Close the cursor
 cursor.close()
