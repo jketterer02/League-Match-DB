@@ -5,7 +5,7 @@ import os
 conn = mysql.connector.connect(host="localhost", user="root", password="password",ssl_disabled=True)
 
 # Check if connection is established to the database
-if conn.is_connected(): print("Connection established...")
+if conn.is_connected(): print("Connection to MySQL established...")
 # Create a cursor object to execute SQL queries
 cursor = conn.cursor()
 
