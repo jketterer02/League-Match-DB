@@ -48,7 +48,6 @@ CREATE TABLE DAMAGE
       D_game_number			INT NOT NULL,
       D_team_name			VARCHAR(20) NOT NULL,
       D_player_name			VARCHAR(20) NOT NULL,
-      
     PRIMARY KEY (D_game_number, D_player_name),
     FOREIGN KEY(D_team_name) REFERENCES TEAM(Team_name),
     FOREIGN KEY(D_player_name) REFERENCES PLAYER(Display_name),
@@ -58,8 +57,7 @@ CREATE TABLE Vision
     ( Vision_score 			INT NOT NULL,
       V_game_number			INT NOT NULL,
       V_team_name			VARCHAR(20) NOT NULL,
-      V_player_name			VARCHAR(20) NOT NULL,
-      
+      V_player_name			VARCHAR(20) NOT NULL,  
     PRIMARY KEY (V_game_number, V_player_name),
     FOREIGN KEY(V_team_name) REFERENCES TEAM(Team_name),
     FOREIGN KEY(V_player_name) REFERENCES PLAYER(Display_name),
@@ -72,7 +70,6 @@ CREATE TABLE KDA
       K_game_number			INT NOT NULL,
       K_team_name			VARCHAR(20) NOT NULL,
       K_player_name			VARCHAR(20) NOT NULL,
-      
     PRIMARY KEY (K_game_number, K_player_name),
     FOREIGN KEY(K_team_name) REFERENCES TEAM(Team_name),
     FOREIGN KEY(K_player_name) REFERENCES PLAYER(Display_name),
