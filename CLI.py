@@ -1,11 +1,12 @@
 import mysql.connector
 import os
+import pandas
 
 # Connect to the MySQL database
 conn = mysql.connector.connect(host="localhost", user="root", password="password",ssl_disabled=True)
 
 # Check if connection is established to the database
-if conn.is_connected(): print("Connection to MySQL established...")
+if conn.is_connected(): print("Connection to MySQL established...\n")
 
 # Create a cursor object to execute SQL queries
 cursor = conn.cursor()
@@ -55,7 +56,7 @@ populate_statements = [
     "INSERT INTO PLAYER values('Keria','T1',5);",
 
     "INSERT INTO TEAM values('G2');",
-    "INSERT INTO COACH values('Dylan Falco ','G2');",
+    "INSERT INTO COACH values('Dylan Falco','G2');",
     "INSERT INTO PLAYER values('BrokenBlade','G2',1);",
     "INSERT INTO PLAYER values('Yike','G2',2);",
     "INSERT INTO PLAYER values('Caps','G2',3);",
@@ -188,23 +189,35 @@ populate_statements = [
 
 ]
 
+# Execute each SQL command
 for line in populate_statements: cursor.execute(line)
 
 # Commit the transaction
 conn.commit()
 
 while(1==1):
-    print("Please select an SQL Query:")
+    print("Please select an SQL Query to display:")
     print("1: Display every player and coach, ordered by team")
     print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
     print("3: Show every Objective taken from Games 1 and 2, along with the player that took them")
     print("4: Display each player's calculated KDA stat and the game they were in, ordered by game")
-    print("5: Display the winners of each game")
+    print("5: Display the winning team of each game")
+    # Gets user input for which query to display
     choice = input("Enter Q1-Q10, or Q to quit: ")
     if choice == ('Q') or choice == ('q'): 
         quit("Exiting Program")
-    elif choice == "1" or choice == "Q1": 
-        print("1 chosen")
+    elif choice == "1" or choice == "Q1":
+        print("\n")
+        cursor.execute("SELECT 'Player' AS Job, Display_name AS Name, P_team_name AS Team FROM PLAYER UNION SELECT 'Coach' AS Job, Coach_display_name AS Name, C_Team_name AS Team FROM COACH ORDER BY Team")
+        # Get the row numbers
+        rows = cursor.fetchall()
+        # Get the column names from the cursor description
+        columns = [desc[0] for desc in cursor.description]
+        # Create the DataFrame
+        df = pandas.DataFrame(rows, columns=columns)
+        # Display the DataFrame (table)
+        print(df.to_string(index=False))
+        print("\n")
     elif choice == "2" or choice == "Q2": 
         print("2 chosen")
     elif choice == "3" or choice == "Q3": 
