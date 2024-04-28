@@ -41,7 +41,6 @@ populate_statements = [
     "INSERT INTO TEAM values('Cloud9');",
     "INSERT INTO COACH values('Mithy','Cloud9');",
     "INSERT INTO PLAYER values('Fudge','Cloud9',1);",
-    "INSERT INTO PLAYER values('Thanatos','Cloud9',1);",
     "INSERT INTO PLAYER values('Blaber','Cloud9',2);",
     "INSERT INTO PLAYER values('Jojopyun','Cloud9',3);",
     "INSERT INTO PLAYER values('Berserker','Cloud9',4);",
@@ -90,20 +89,48 @@ populate_statements = [
     "INSERT INTO GAME values(4,55,'T1','Cloud9','T1');",
     "INSERT INTO GAME values(5,55,'Flyquest','G2','G2');",
 
-    #Populating with Objectives
+    #Populating with Objectives for Game 1
 
-    "INSERT INTO OBJECTIVE values(0,1,'Fire Dragon','Flyquest','Bwipo');",
-    "INSERT INTO OBJECTIVE values(1,1,'Air Dragon','Fnatic','Razork');",
+    "INSERT INTO OBJECTIVE values(0,1,'Infernal Dragon','Flyquest','Bwipo');",
+    "INSERT INTO OBJECTIVE values(1,1,'Cloud Dragon','Fnatic','Razork');",
     "INSERT INTO OBJECTIVE values(2,1,'Mountain Dragon','Fnatic','Razork');",
-    "INSERT INTO OBJECTIVE values(3,1,'Elder Dragon','Fnatic','Razork');",
-    "INSERT INTO OBJECTIVE values(4,1,'Inhibitor','Flyquest','Jensen');",
-    "INSERT INTO OBJECTIVE values(5,1,'Nexus','Flyquest','Inspired');",
+    "INSERT INTO OBJECTIVE values(3,1,'Mountain Dragon','FlyQuest','Inspired');",
+    "INSERT INTO OBJECTIVE values(4,1,'Elder Dragon','Fnatic','Razork');",
+    "INSERT INTO OBJECTIVE values(5,1,'Inhibitor','Flyquest','Inspired');",
+    "INSERT INTO OBJECTIVE values(6,1,'Inhibitor','Flyquest','Bwipo');",
+    "INSERT INTO OBJECTIVE values(7,1,'Inhibitor','Flyquest','Jensen');",
+    "INSERT INTO OBJECTIVE values(8,1,'Nexus','Flyquest','Inspired');",
+
+    #Populating with Objectives for Game 2
 
     "INSERT INTO OBJECTIVE values(0,2,'Void Grub','T1','Zeus');",
-    "INSERT INTO OBJECTIVE values(1,2,'Water Dragon','G2','Yike');",
-    "INSERT INTO OBJECTIVE values(2,2,'Mountain Dragon','G2','Caps');",
-    "INSERT INTO OBJECTIVE values(3,2,'Turret','G2','BrokenBlade');",
-    "INSERT INTO OBJECTIVE values(4,2,'Nexus','T1','Faker');",
+    "INSERT INTO OBJECTIVE values(1,2,'Void Grub','G2','Yike');",
+    "INSERT INTO OBJECTIVE values(2,2,'Void Grub','G2','Caps');",
+    "INSERT INTO OBJECTIVE values(3,2,'Mountain Dragon','G2','BrokenBlade');",
+    "INSERT INTO OBJECTIVE values(4,2,'Ocean Dragon','T1','Faker');",
+    "INSERT INTO OBJECTIVE values(5,2,'Hextech Dragon','T1','Faker');",
+    "INSERT INTO OBJECTIVE values(6,2,'Hextech Dragon','T1','Oner');",
+    "INSERT INTO OBJECTIVE values(7,2,'Elder Dragon','T1','Oner');",
+    "INSERT INTO OBJECTIVE values(8,2,'Baron','T1','Oner');",
+    "INSERT INTO OBJECTIVE values(9,2,'Inhibitor','T1','Oner');",
+    "INSERT INTO OBJECTIVE values(10,2,'Inhibitor','G2','Yike');",
+    "INSERT INTO OBJECTIVE values(11,2,'Nexus','T1','Zeus');",
+
+    #Populating with Objectives for Game 3
+
+    "INSERT INTO OBJECTIVE values(0,3,'Void Grub','Cloud9','Blaber');",
+    "INSERT INTO OBJECTIVE values(1,3,'Void Grub','G2','Yike');",
+    "INSERT INTO OBJECTIVE values(2,3,'Void Grub','G2','Caps');",
+    "INSERT INTO OBJECTIVE values(3,3,'Ocean Dragon','Cloud9','Fudge');",
+    "INSERT INTO OBJECTIVE values(4,3,'Mountain Dragon','G2','BrokenBlade');",
+    "INSERT INTO OBJECTIVE values(5,3,'Hextech Dragon','Cloud9','Blaber');",
+    "INSERT INTO OBJECTIVE values(6,3,'Hextech Dragon','Cloud9','Blaber');",
+    "INSERT INTO OBJECTIVE values(7,3,'Rift Herald','Cloud9','Blaber');",
+    "INSERT INTO OBJECTIVE values(8,3,'Baron','Cloud9','Jojopyun');",
+    "INSERT INTO OBJECTIVE values(9,3,'Inhibitor','Cloud9','Blaber');",
+    "INSERT INTO OBJECTIVE values(10,3,'Elder Dragon','Cloud9','Berserker');",
+    "INSERT INTO OBJECTIVE values(11,3,'Inhibitor','Cloud9','Berserker');",
+    "INSERT INTO OBJECTIVE values(12,3,'Nexus','Cloud9','VULCAN');",
 
     #Populating with Damage numbers for Game 1
 
@@ -133,6 +160,20 @@ populate_statements = [
     "INSERT INTO DAMAGE values(2115,2,'G2','Hans Sama');",
     "INSERT INTO DAMAGE values(14323,2,'G2','Mikyx');",
 
+    #Populating with Damage numbers for Game 3
+
+    "INSERT INTO DAMAGE values(13020,3,'G2','BrokenBlade');",
+    "INSERT INTO DAMAGE values(11608,3,'G2','Yike');",
+    "INSERT INTO DAMAGE values(8941,3,'G2','Caps');",
+    "INSERT INTO DAMAGE values(6115,3,'G2','Hans Sama');",
+    "INSERT INTO DAMAGE values(12999,3,'G2','Mikyx');",
+
+    "INSERT INTO DAMAGE values(15000,3,'Cloud9','Fudge');",
+    "INSERT INTO DAMAGE values(12967,3,'Cloud9','Blaber');",
+    "INSERT INTO DAMAGE values(2115,3,'Cloud9','Jojopyun');",
+    "INSERT INTO DAMAGE values(12341,3,'Cloud9','Berserker');",
+    "INSERT INTO DAMAGE values(14323,3,'Cloud9','VULCAN');",
+
     #Populating with Vision Score for Game 1
 
     "INSERT INTO VISION values(25,1,'Flyquest','Bwipo');",
@@ -161,6 +202,19 @@ populate_statements = [
     "INSERT INTO VISION values(7,2,'G2','Hans Sama');",
     "INSERT INTO VISION values(34,2,'G2','Mikyx');",
 
+    #Populating with Vision Score for Game 3
+
+    "INSERT INTO VISION values(68,3,'G2','BrokenBlade');",
+    "INSERT INTO VISION values(34,3,'G2','Yike');",
+    "INSERT INTO VISION values(15,3,'G2','Caps');",
+    "INSERT INTO VISION values(20,3,'G2','Hans Sama');",
+    "INSERT INTO VISION values(21,3,'G2','Mikyx');",
+
+    "INSERT INTO VISION values(46,3,'Cloud9','Fudge');",
+    "INSERT INTO VISION values(52,3,'Cloud9','Blaber');",
+    "INSERT INTO VISION values(25,3,'Cloud9','Jojopyun');",
+    "INSERT INTO VISION values(35,3,'Cloud9','Berserker');",
+    "INSERT INTO VISION values(30,3,'Cloud9','VULCAN');",
 
     #Populating with KDA for Game 1
 
@@ -188,7 +242,21 @@ populate_statements = [
     "INSERT INTO KDA values(2,4,6,2,'G2','Yike');",
     "INSERT INTO KDA values(0,1,2,2,'G2','Caps');",
     "INSERT INTO KDA values(24,0,13,2,'G2','Hans Sama');",
-    "INSERT INTO KDA values(5,2,1,2,'G2','Mikyx');"
+    "INSERT INTO KDA values(5,2,1,2,'G2','Mikyx');",
+
+    #Populating with KDA for Game 3
+
+    "INSERT INTO KDA values(2,10,7,3,'G2','BrokenBlade');",
+    "INSERT INTO KDA values(4,6,2,3,'G2','Yike');",
+    "INSERT INTO KDA values(2,0,1,3,'G2','Caps');",
+    "INSERT INTO KDA values(9,11,6,3,'G2','Hans Sama');",
+    "INSERT INTO KDA values(2,1,5,3,'G2','Mikyx');",
+
+    "INSERT INTO KDA values(10,0,0,3,'Cloud9','Fudge');",
+    "INSERT INTO KDA values(0,5,15,3,'Cloud9','Blaber');",
+    "INSERT INTO KDA values(14,7,3,3,'Cloud9','Jojopyun');",
+    "INSERT INTO KDA values(6,6,6,3,'Cloud9','Berserker');",
+    "INSERT INTO KDA values(2,0,2,3,'Cloud9','VULCAN');"
 
 ]
 
@@ -217,8 +285,8 @@ while(1==1):
     print("Please select an SQL Query to display:")
     print("1: Display every player and coach, ordered by team")
     print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
-    print("3: Show every Objective taken from Games 1 and 2, along with the player that took them")
-    print("4: Display each player's calculated KDA stat and the game they were in, ordered by game")
+    print("3: Show every Objective taken from Games 1, 2, and 3 along with the player that took them")
+    print("4: Display each player's calculated KDA stat and the game they were in, ordered by game and KDA")
     print("5: Display the winning team of each game")
     print("6: For each game, display each player and their team, and their calucated vision score per minute stat")
 
@@ -230,9 +298,9 @@ while(1==1):
     elif choice == "2" or choice == "Q2": 
         execute_and_display_func("SELECT PLAYER.P_team_name AS Team, MAX(KDA.Kills) AS Maximum_Kills, MAX(KDA.Deaths) AS Maximum_Deaths, MAX(KDA.Assists) AS Maximum_Assists,ROUND(AVG(KDA.Kills),1) AS Average_Kills, ROUND(AVG(KDA.Deaths),1) AS Average_Deaths, ROUND(AVG(KDA.Assists),1) AS Average_Assists FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name GROUP BY PLAYER.P_team_name HAVING AVG(KDA.Kills) > 3.7 ORDER BY Maximum_Kills ASC")
     elif choice == "3" or choice == "Q3":
-        execute_and_display_func("SELECT O_game_number AS Game, Objective_Type as Objective, O_player_name AS Player_Name FROM OBJECTIVE WHERE O_game_number = 1 ||O_game_number = 2")
+        execute_and_display_func("SELECT O_game_number AS Game, Objective_Type as Objective, O_player_name AS Player_Name, O_team_name AS Team FROM OBJECTIVE")
     elif choice == "4" or choice == "Q4":
-        execute_and_display_func("SELECT  KDA.K_game_number AS Game_Number, PLAYER.Display_name AS Player_Name, KDA.Kills, KDA.Assists, KDA.Deaths, CASE WHEN KDA.Deaths = 0 THEN ROUND(KDA.Kills + KDA.Assists,1) ELSE ROUND(((KDA.Kills + KDA.Assists) / KDA.Deaths),1) END AS KDA FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name ORDER BY KDA.K_game_number")
+        execute_and_display_func("SELECT  KDA.K_game_number AS Game_Number, PLAYER.Display_name AS Player_Name, KDA.Kills, KDA.Assists, KDA.Deaths, CASE WHEN KDA.Deaths = 0 THEN ROUND(KDA.Kills + KDA.Assists,1) ELSE ROUND(((KDA.Kills + KDA.Assists) / KDA.Deaths),1) END AS KDA FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name ORDER BY KDA.K_game_number, KDA DESC")
     elif choice == "5" or choice == "Q5":
         execute_and_display_func("SELECT GAME.Game_number AS Game, Game.Winning_team_name AS Winner FROM GAME")
     elif choice == "6" or choice == "Q6":
