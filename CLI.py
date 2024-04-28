@@ -23,8 +23,8 @@ create_statements = [
     "CREATE TABLE DAMAGE (Damage_number INT NOT NULL, D_game_number INT NOT NULL, D_team_name VARCHAR(20) NOT NULL, D_player_name VARCHAR(20) NOT NULL, PRIMARY KEY (D_game_number, D_player_name), FOREIGN KEY (D_team_name) REFERENCES TEAM(Team_name), FOREIGN KEY (D_player_name) REFERENCES PLAYER(Display_name), FOREIGN KEY (D_game_number) REFERENCES GAME(Game_number));",
     "CREATE TABLE Vision (Vision_score INT NOT NULL, V_game_number INT NOT NULL, V_team_name VARCHAR(20) NOT NULL, V_player_name VARCHAR(20) NOT NULL, PRIMARY KEY (V_game_number, V_player_name), FOREIGN KEY (V_team_name) REFERENCES TEAM(Team_name), FOREIGN KEY (V_player_name) REFERENCES PLAYER(Display_name), FOREIGN KEY (V_game_number) REFERENCES GAME(Game_number));",
     "CREATE TABLE KDA (Kills INT NOT NULL, Deaths INT NOT NULL, Assists INT NOT NULL, K_game_number INT NOT NULL, K_team_name VARCHAR(20) NOT NULL, K_player_name VARCHAR(20) NOT NULL, PRIMARY KEY (K_game_number, K_player_name), FOREIGN KEY (K_team_name) REFERENCES TEAM(Team_name), FOREIGN KEY (K_player_name) REFERENCES PLAYER(Display_name), FOREIGN KEY (K_game_number) REFERENCES GAME(Game_number));",
-    "CREATE TABLE Log (LogID INT AUTO_INCREMENT PRIMARY KEY, Message VARCHAR(50));",
-    "CREATE TRIGGER PlayerInserted AFTER INSERT ON PLAYER FOR EACH ROW BEGIN DECLARE log_message VARCHAR(50); SET log_message = CONCAT('New player inserted with display name: ', NEW.Display_name); INSERT INTO Log (Message) VALUES (log_message); END;"
+    "CREATE TABLE LOG (LogID INT AUTO_INCREMENT PRIMARY KEY, Message VARCHAR(100));",
+    "CREATE TRIGGER PlayerInserted AFTER INSERT ON PLAYER FOR EACH ROW BEGIN DECLARE log_message VARCHAR(100); SET log_message = CONCAT('Player: ', NEW.Display_name, ' inserted at ', DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s')); INSERT INTO Log (Message) VALUES (log_message); END;"
 ]
         
 # Execute each SQL command
@@ -62,6 +62,9 @@ populate_statements = [
     "INSERT INTO PLAYER values('Caps','G2',3);",
     "INSERT INTO PLAYER values('Hans Sama','G2',4);",
     "INSERT INTO PLAYER values('Mikyx','G2',5);",
+
+    #Sleep necessary to display timestamp differences in LOG when triggered
+    "DO SLEEP(2);",
 
     "INSERT INTO TEAM values('FlyQuest');",
     "INSERT INTO COACH values('Nukeduck','FlyQuest');",
@@ -195,52 +198,45 @@ for line in populate_statements: cursor.execute(line)
 # Commit the transaction
 conn.commit()
 
+# Executes the SQL Query, and prints the resulting table
+def execute_and_display_func(SQL_Query):
+    print("\n")
+    cursor.execute(SQL_Query)
+    # Get the row numbers
+    rows = cursor.fetchall()
+    # Get the column names
+    columns = [desc[0] for desc in cursor.description]
+    # Create the DataFrame
+    df = pandas.DataFrame(rows, columns=columns)
+    # Print the DataFrame (table)
+    print(df.to_string(index=False))
+    print("\n")
+
 while(1==1):
+
     print("Please select an SQL Query to display:")
     print("1: Display every player and coach, ordered by team")
     print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
     print("3: Show every Objective taken from Games 1 and 2, along with the player that took them")
     print("4: Display each player's calculated KDA stat and the game they were in, ordered by game")
     print("5: Display the winning team of each game")
+    print("6: For each game, display each player and their team, and their calucated vision score per minute stat")
 
     # Gets user input for which query to display
-    choice = input("Enter Q1-Q10, or Q to quit: ")
-    if choice == ('Q') or choice == ('q'): 
-        quit("Exiting Program")
+    choice = input("Enter 'Q1'-'Q10', 'Trigger' for Trigger Display, or 'Q' to quit: ")
+    if choice == ('Q') or choice == ('q'): quit("Exiting Program")
     elif choice == "1" or choice == "Q1":
-        print("\n")
-        cursor.execute("SELECT 'Player' AS Job, Display_name AS Name, P_team_name AS Team FROM PLAYER UNION SELECT 'Coach' AS Job, Coach_display_name AS Name, C_Team_name AS Team FROM COACH ORDER BY Team")
-        # Get the row numbers
-        rows = cursor.fetchall()
-        # Get the column names from the cursor description
-        columns = [desc[0] for desc in cursor.description]
-        # Create the DataFrame
-        df = pandas.DataFrame(rows, columns=columns)
-        # Display the DataFrame (table)
-        print(df.to_string(index=False))
-        print("\n")
+        execute_and_display_func("SELECT 'Player' AS Job, Display_name AS Name, P_team_name AS Team FROM PLAYER UNION SELECT 'Coach' AS Job, Coach_display_name AS Name, C_Team_name AS Team FROM COACH ORDER BY Team")
     elif choice == "2" or choice == "Q2": 
-        print("\n")
-        cursor.execute("SELECT PLAYER.P_team_name AS Team, MAX(KDA.Kills) AS Maximum_Kills, MAX(KDA.Deaths) AS Maximum_Deaths, MAX(KDA.Assists) AS Maximum_Assists,ROUND(AVG(KDA.Kills),1) AS Average_Kills, ROUND(AVG(KDA.Deaths),1) AS Average_Deaths, ROUND(AVG(KDA.Assists),1) AS Average_Assists FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name GROUP BY PLAYER.P_team_name HAVING AVG(KDA.Kills) > 3.7 ORDER BY Maximum_Kills ASC")
-        rows = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
-        df = pandas.DataFrame(rows, columns=columns)
-        print(df.to_string(index=False))
-        print("\n")
-    elif choice == "3" or choice == "Q3": 
-        print("\n")
-        cursor.execute("SELECT O_game_number AS Game, Objective_Type as Objective, O_player_name AS Player_Name FROM OBJECTIVE WHERE O_game_number = 1 ||O_game_number = 2")
-        rows = cursor.fetchall()
-        columns = [desc[0] for desc in cursor.description]
-        df = pandas.DataFrame(rows, columns=columns)
-        print(df.to_string(index=False))
-        print("\n")
-    elif choice == "4" or choice == "Q4": 
-        print("4 chosen")
-    elif choice == "5" or choice == "Q5": 
-        print("5 chosen")
-    elif choice == "6" or choice == "Q6": 
-        print("6 chosen")
+        execute_and_display_func("SELECT PLAYER.P_team_name AS Team, MAX(KDA.Kills) AS Maximum_Kills, MAX(KDA.Deaths) AS Maximum_Deaths, MAX(KDA.Assists) AS Maximum_Assists,ROUND(AVG(KDA.Kills),1) AS Average_Kills, ROUND(AVG(KDA.Deaths),1) AS Average_Deaths, ROUND(AVG(KDA.Assists),1) AS Average_Assists FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name GROUP BY PLAYER.P_team_name HAVING AVG(KDA.Kills) > 3.7 ORDER BY Maximum_Kills ASC")
+    elif choice == "3" or choice == "Q3":
+        execute_and_display_func("SELECT O_game_number AS Game, Objective_Type as Objective, O_player_name AS Player_Name FROM OBJECTIVE WHERE O_game_number = 1 ||O_game_number = 2")
+    elif choice == "4" or choice == "Q4":
+        execute_and_display_func("SELECT  KDA.K_game_number AS Game_Number, PLAYER.Display_name AS Player_Name, KDA.Kills, KDA.Assists, KDA.Deaths, CASE WHEN KDA.Deaths = 0 THEN ROUND(KDA.Kills + KDA.Assists,1) ELSE ROUND(((KDA.Kills + KDA.Assists) / KDA.Deaths),1) END AS KDA FROM PLAYER JOIN KDA ON PLAYER.Display_name = KDA.K_player_name ORDER BY KDA.K_game_number")
+    elif choice == "5" or choice == "Q5":
+        execute_and_display_func("SELECT GAME.Game_number AS Game, Game.Winning_team_name AS Winner FROM GAME")
+    elif choice == "6" or choice == "Q6":
+        execute_and_display_func("SELECT V_game_number AS Game, V_player_name AS Player, P_team_name AS Team, ROUND(Vision_score / Game_length_min,1) AS VSPM FROM VISION INNER JOIN GAME ON V_game_number = Game_number INNER JOIN PLAYER ON V_player_name = Display_name GROUP BY V_game_number, V_player_name ORDER BY V_game_number, VSPM DESC")
     elif choice == "7" or choice == "Q7": 
         print("7 chosen")
     elif choice == "8" or choice == "Q8": 
@@ -249,6 +245,8 @@ while(1==1):
         print("9 chosen")
     elif choice == "10" or choice == "Q10": 
         print("10 chosen")
+    elif choice == "Trigger" or choice == "trigger": 
+        execute_and_display_func("SELECT Message AS DB_Insert_Timestamp FROM LOG")
 
 
 # Close the cursor
