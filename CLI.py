@@ -292,6 +292,7 @@ while(1==1):
     print("7: Display players and their associated damage values and teams for each game")
     print("8: Show every player with at least one objective taken for each game")
     print("9: Show only the player(s) with the most number of objectives taken per game")
+    print("10: Display every player with their team and actual game position")
     
 
     # Gets user input for which query to display
@@ -316,7 +317,7 @@ while(1==1):
     elif choice == "9" or choice == "Q9": 
         execute_and_display_func("WITH count AS(SELECT O_game_number AS Game,O_player_name AS Player,O_team_name AS Team, COUNT(*) AS Objectives_Taken FROM OBJECTIVE GROUP BY O_game_number, O_team_name, O_player_name ORDER BY O_game_number, Objectives_taken DESC) SELECT count.Game,count.Objectives_Taken,count.Player,count.Team FROM count WHERE count.Objectives_Taken =( SELECT MAX(current_count.Objectives_Taken) FROM count current_count WHERE current_count.Game = count.Game)")
     elif choice == "10" or choice == "Q10": 
-        print("\n10 chosen\n")
+        execute_and_display_func("SELECT Display_name AS Player,P_team_name AS Team,CASE Position WHEN 1 THEN 'Toplane' WHEN 2 THEN 'Jungle' WHEN 3 THEN 'Midlaner' WHEN 4 THEN 'ADC' WHEN 5 THEN 'Support' END AS Role FROM PLAYER ORDER BY Team, Position, Display_name")
     elif choice == "Trigger" or choice == "trigger": 
         execute_and_display_func("SELECT Message AS DB_Insert_Timestamp FROM LOG")
 
