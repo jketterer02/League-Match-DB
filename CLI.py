@@ -286,9 +286,10 @@ while(1==1):
     print("1: Display every player and coach, ordered by team")
     print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
     print("3: Show every Objective taken from Games 1, 2, and 3 along with the player that took them")
-    print("4: Display each player's calculated KDA stat and the game they were in, ordered by game and KDA")
+    print("4: Display each player's calculated KDA stat and the game they were in, ordered by game and KDA in descending order")
     print("5: Display the winning team of each game")
     print("6: For each game, display each player and their team, and their calucated vision score per minute stat")
+    print("7: Display players and their associated damage values and teams for each game")
 
     # Gets user input for which query to display
     choice = input("Enter 'Q1'-'Q10', 'Trigger' for Trigger Display, or 'Q' to quit: ")
@@ -304,9 +305,9 @@ while(1==1):
     elif choice == "5" or choice == "Q5":
         execute_and_display_func("SELECT GAME.Game_number AS Game, Game.Winning_team_name AS Winner FROM GAME")
     elif choice == "6" or choice == "Q6":
-        execute_and_display_func("SELECT V_game_number AS Game, V_player_name AS Player, P_team_name AS Team, ROUND(Vision_score / Game_length_min,1) AS VSPM FROM VISION INNER JOIN GAME ON V_game_number = Game_number INNER JOIN PLAYER ON V_player_name = Display_name GROUP BY V_game_number, V_player_name ORDER BY V_game_number, VSPM DESC")
+        execute_and_display_func("SELECT V_game_number AS Game, V_player_name AS Player, V_team_name AS Team, ROUND(Vision_score / Game_length_min,1) AS VSPM FROM VISION INNER JOIN GAME ON V_game_number = Game_number ORDER BY V_game_number, V_team_name, VSPM DESC")
     elif choice == "7" or choice == "Q7": 
-        print("7 chosen")
+        execute_and_display_func("SELECT D_game_number, Damage_number,D_player_name,D_team_name FROM DAMAGE ORDER BY D_game_number, D_team_name, Damage_number DESC")
     elif choice == "8" or choice == "Q8": 
         print("8 chosen")
     elif choice == "9" or choice == "Q9": 
