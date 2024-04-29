@@ -290,6 +290,9 @@ while(1==1):
     print("5: Display the winning team of each game")
     print("6: For each game, display each player and their team, and their calucated vision score per minute stat")
     print("7: Display players and their associated damage values and teams for each game")
+    print("8: Show every player with at least one objective taken for each game")
+    print("9: Show only the player(s) with the most number of objectives taken per game")
+    
 
     # Gets user input for which query to display
     choice = input("Enter 'Q1'-'Q10', 'Trigger' for Trigger Display, or 'Q' to quit: ")
@@ -308,10 +311,10 @@ while(1==1):
         execute_and_display_func("SELECT V_game_number AS Game, V_player_name AS Player, V_team_name AS Team, ROUND(Vision_score / Game_length_min,1) AS VSPM FROM VISION INNER JOIN GAME ON V_game_number = Game_number ORDER BY V_game_number, V_team_name, VSPM DESC")
     elif choice == "7" or choice == "Q7": 
         execute_and_display_func("SELECT D_game_number, Damage_number,D_player_name,D_team_name FROM DAMAGE ORDER BY D_game_number, D_team_name, Damage_number DESC")
-    elif choice == "8" or choice == "Q8": 
-        print("8 chosen")
+    elif choice == "8" or choice == "Q8":
+        execute_and_display_func("SELECT O_game_number AS Game,COUNT(*) AS Objectives_Taken,O_player_name AS Player,O_team_name AS Team FROM OBJECTIVE GROUP BY O_game_number, O_team_name, O_player_name ORDER BY O_game_number, Objectives_taken DESC")
     elif choice == "9" or choice == "Q9": 
-        print("9 chosen")
+        execute_and_display_func("WITH count AS(SELECT O_game_number AS Game,O_player_name AS Player,O_team_name AS Team, COUNT(*) AS Objectives_Taken FROM OBJECTIVE GROUP BY O_game_number, O_team_name, O_player_name ORDER BY O_game_number, Objectives_taken DESC) SELECT count.Game,count.Objectives_Taken,count.Player,count.Team FROM count WHERE count.Objectives_Taken =( SELECT MAX(current_count.Objectives_Taken) FROM count current_count WHERE current_count.Game = count.Game)")
     elif choice == "10" or choice == "Q10": 
         print("10 chosen")
     elif choice == "Trigger" or choice == "trigger": 
