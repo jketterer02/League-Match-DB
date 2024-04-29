@@ -280,8 +280,39 @@ def execute_and_display_func(SQL_Query):
     print(df.to_string(index=False,))
     print("\n")
 
-while(1==1):
+def cleanup():
+    # Creates DB with same lines as dbDROP.sql, formatting needs to be different due to mysql connector
+    drop_statements = [
+    "DROP TRIGGER  PlayerInserted;",
+    "drop table KDA;",
+    "drop table VISION;",
+    "drop table DAMAGE;",
+    "drop table OBJECTIVE;",
+    "drop table GAME;",
+    "drop table PLAYER;",
+    "drop table COACH;",
+    "drop table TEAM;",
+    "DROP DATABASE match_database;"
+    ]
 
+    # Execute each SQL command
+    for line in drop_statements: cursor.execute(line)
+
+    # Commit the transaction
+    conn.commit()
+
+    # Close the cursor
+    cursor.close()
+
+    # Close the connection
+    conn.close()
+    # Exit Program
+    quit("Exiting Program")
+    
+
+
+while(1==1):
+    #Prints options for user after every Query chosen
     print("Please select an SQL Query to display:")
     print("1: Display every player and coach, ordered by team")
     print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
@@ -293,11 +324,9 @@ while(1==1):
     print("8: Show every player with at least one objective taken for each game")
     print("9: Show only the player(s) with the most number of objectives taken per game")
     print("10: Display every player with their team and actual game position")
-    
-
     # Gets user input for which query to display
     choice = input("Enter 'Q1'-'Q10', 'Trigger' for Trigger Display, or 'Q' to quit: ")
-    if choice == ('Q') or choice == ('q'): quit("Exiting Program")
+    if choice == ('Q') or choice == ('q'): cleanup()
     elif choice == "1" or choice == "Q1":
         execute_and_display_func("SELECT 'Player' AS Job, Display_name AS Name, P_team_name AS Team FROM PLAYER UNION SELECT 'Coach' AS Job, Coach_display_name AS Name, C_Team_name AS Team FROM COACH ORDER BY Team")
     elif choice == "2" or choice == "Q2": 
@@ -320,9 +349,3 @@ while(1==1):
         execute_and_display_func("SELECT Display_name AS Player,P_team_name AS Team,CASE Position WHEN 1 THEN 'Toplane' WHEN 2 THEN 'Jungle' WHEN 3 THEN 'Midlaner' WHEN 4 THEN 'ADC' WHEN 5 THEN 'Support' END AS Role FROM PLAYER ORDER BY Team, Position, Display_name")
     elif choice == "Trigger" or choice == "trigger": 
         execute_and_display_func("SELECT Message AS DB_Insert_Timestamp FROM LOG")
-
-
-# Close the cursor
-cursor.close()
-# Close the connection
-conn.close()
