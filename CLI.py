@@ -276,8 +276,8 @@ def execute_and_display_func(SQL_Query):
     columns = [desc[0] for desc in cursor.description]
     # Create the DataFrame
     df = pandas.DataFrame(rows, columns=columns)
-    # Print the DataFrame (table)
-    print(df.to_string(index=False))
+    # Prints the Dataframe
+    print(df.to_string(index=False,))
     print("\n")
 
 while(1==1):
@@ -316,7 +316,7 @@ while(1==1):
     elif choice == "9" or choice == "Q9": 
         execute_and_display_func("WITH count AS(SELECT O_game_number AS Game,O_player_name AS Player,O_team_name AS Team, COUNT(*) AS Objectives_Taken FROM OBJECTIVE GROUP BY O_game_number, O_team_name, O_player_name ORDER BY O_game_number, Objectives_taken DESC) SELECT count.Game,count.Objectives_Taken,count.Player,count.Team FROM count WHERE count.Objectives_Taken =( SELECT MAX(current_count.Objectives_Taken) FROM count current_count WHERE current_count.Game = count.Game)")
     elif choice == "10" or choice == "Q10": 
-        print("10 chosen")
+        print("\n10 chosen\n")
     elif choice == "Trigger" or choice == "trigger": 
         execute_and_display_func("SELECT Message AS DB_Insert_Timestamp FROM LOG")
 
