@@ -319,7 +319,7 @@ while(1==1):
     print("3: Show every Objective taken from Games 1, 2, and 3 along with the player that took them")
     print("4: Display each player's calculated KDA stat and the game they were in, ordered by game and KDA in descending order")
     print("5: Display the winning team of each game")
-    print("6: For each game, display each player and their team, and their calucated vision score per minute stat")
+    print("6: For each game, display each player and their team, and their caclulated vision score per minute stat")
     print("7: Display players and their associated damage values and teams for each game")
     print("8: Show every player with at least one objective taken for each game")
     print("9: Show only the player(s) with the most number of objectives taken per game")
