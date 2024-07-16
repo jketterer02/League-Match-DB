@@ -266,7 +266,7 @@ for line in populate_statements: cursor.execute(line)
 # Commit the transaction
 conn.commit()
 
-# Executes the SQL Query, and prints the resulting table
+# Executes the SQL Query and prints the resulting table
 def execute_and_display_func(SQL_Query):
     print("\n")
     cursor.execute(SQL_Query)
@@ -280,6 +280,7 @@ def execute_and_display_func(SQL_Query):
     print(df.to_string(index=False,))
     print("\n")
 
+# Drops the DB and closes the connection
 def cleanup():
     # Creates DB with same lines as dbDROP.sql, formatting needs to be different due to mysql connector
     drop_statements = [
@@ -310,9 +311,9 @@ def cleanup():
     quit("Exiting Program")
     
 
-
+# Command Line Interface
 while(1==1):
-    #Prints options for user after every Query chosen
+    # Prints options for user after every Query chosen
     print("Please select an SQL Query to display:")
     print("1: Display every player and coach, ordered by team")
     print("2: Display each team's maximum kills, deaths, and assists, average kills, deaths and assists, only if average kills > 3.7, sorted by maximum kills in ascending order")
