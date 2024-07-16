@@ -1,5 +1,4 @@
 import mysql.connector
-import os
 import pandas
 
 # Connect to the MySQL database
